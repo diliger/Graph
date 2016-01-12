@@ -1,6 +1,6 @@
 {
     "name": "Graph",
     "description": "Build graphs",
-    "html": "/Graph/AppIconPage.html",
+    "html": "/Graph/viewmodels/AppIconPage.html",
     "url": "Graph"
 }

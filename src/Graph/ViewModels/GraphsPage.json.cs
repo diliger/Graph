@@ -12,7 +12,7 @@ namespace Graph {
         partial class GraphsItemPage {
             protected override void OnData() {
                 base.OnData();
-                this.Url = string.Format("/Graph/Graphs/{0}", this.Key);
+                this.Url = string.Format("/Graph/Details/{0}", this.Key);
             }
         }
     }

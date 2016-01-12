@@ -1,0 +1,22 @@
+﻿<link rel="import" href="/sys/polymer/polymer.html">
+
+<dom-module id="graph-element">
+    <template>
+        <div>Here will be a <b>{{name}}</b> graph.</div>
+    </template>
+    <script>
+        // register a new element called proto-element
+        Polymer({
+            is: "graph-element",
+            properties: {
+                name: { type: String },
+                description: { type: String },
+                values: { type: Array }
+            },
+            // add a callback to the element's prototype
+            ready: function () {
+            }
+        });
+    </script>
+
+</dom-module>

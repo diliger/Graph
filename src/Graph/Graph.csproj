@@ -88,14 +88,15 @@
     </TypedJSON>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="wwwroot\Graph\AppIconPage.html" />
-    <Content Include="wwwroot\Graph\AppMenuPage.html" />
-    <Content Include="wwwroot\Graph\GraphIcon.png" />
-    <Content Include="wwwroot\Graph\GraphPage.html" />
-    <Content Include="wwwroot\Graph\GraphsPage.html" />
-    <Content Include="wwwroot\Graph\LauncherWrapperPage.html" />
-    <Content Include="wwwroot\Graph\MasterPage.html" />
-    <Content Include="wwwroot\Graph\style.css" />
+    <Content Include="wwwroot\Graph\elements\graph-element.html" />
+    <Content Include="wwwroot\Graph\viewmodels\AppIconPage.html" />
+    <Content Include="wwwroot\Graph\viewmodels\AppMenuPage.html" />
+    <Content Include="wwwroot\Graph\images\GraphIcon.png" />
+    <Content Include="wwwroot\Graph\viewmodels\GraphPage.html" />
+    <Content Include="wwwroot\Graph\viewmodels\GraphsPage.html" />
+    <Content Include="wwwroot\Graph\viewmodels\LauncherWrapperPage.html" />
+    <Content Include="wwwroot\Graph\viewmodels\MasterPage.html" />
+    <Content Include="wwwroot\Graph\css\style.css" />
   </ItemGroup>
   <ItemGroup>
     <TypedJSON Include="ViewModels\GraphPage.json">

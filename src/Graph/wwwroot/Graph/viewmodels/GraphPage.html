@@ -1,0 +1,14 @@
+﻿<script src="/sys/webcomponentsjs/webcomponents-lite.min.js"></script>
+<link rel="import" href="/Graph/elements/graph-element.html">
+
+<!-- Every node from this template, will be stamped, with view-model
+attached to `model` property -->
+<template>
+    <!-- Consume this model in Polymer's autobinding element -->
+    <template is="dom-bind">
+        <template>
+            <graph-element name="{{model.Name}}" description="{{model.Description}}"></graph-element>
+        </template>
+        <dom-bind-notifier path="model" observed-object="{{model}}" deep></dom-bind-notifier>
+    </template>
+</template>

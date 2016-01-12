@@ -29,15 +29,15 @@ namespace Graph {
                     master = new MasterPage();
 
                     if (Session.Current != null) {
-                        master.Html = "/Graph/LauncherWrapperPage.html";
+                        master.Html = "/Graph/viewmodels/LauncherWrapperPage.html";
                         master.Session = Session.Current;
                     } else {
-                        master.Html = "/Graph/MasterPage.html";
+                        master.Html = "/Graph/viewmodels/MasterPage.html";
                         master.Session = new Session(SessionOptions.PatchVersioning);
                     }
 
                     master.RecentGraphs = new GraphsPage() {
-                        Html = "/Graph/GraphsPage.html"
+                        Html = "/Graph/viewmodels/GraphsPage.html"
                     };
                 }
 
@@ -48,11 +48,12 @@ namespace Graph {
             });
 
 
-            Handle.GET("/Graph/Graphs/{?}", (string Key) => {
+            //The bug! /Graph/Graphs/{?} returns Not found exception
+            Handle.GET("/Graph/Details/{?}", (string Key) => {
                 MasterPage master = Self.GET<MasterPage>("/Graph");
                 master.FocusedGraph = Db.Scope<GraphPage>(() => {
                     var page = new GraphPage() {
-                        Html = "/Graph/GraphPage.html",
+                        Html = "/Graph/viewmodels/GraphPage.html",
                         Data = Db.SQL<Simplified.Ring6.Graph>(@"SELECT i FROM Simplified.Ring6.Graph i WHERE i.Key = ?", Key).First
                     };
 
@@ -62,7 +63,7 @@ namespace Graph {
             });
 
             Handle.GET("/Graph/menu", () => {
-                return new Page() { Html = "/Graph/AppMenuPage.html" };
+                return new Page() { Html = "/Graph/viewmodels/AppMenuPage.html" };
             });
 
             Handle.GET("/Graph/app-name", () => {
