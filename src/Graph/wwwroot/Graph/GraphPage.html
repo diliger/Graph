@@ -1,0 +1,16 @@
+﻿<!-- Every node from this template, will be stamped, with view-model
+attached to `model` property -->
+<template>
+    <!-- Consume this model in Polymer's autobinding element -->
+    <template is="dom-bind">
+        <template>
+            <h3>Graph #<span>{{model.Name}}</span></h3>
+            <p>{{model.Description}}</p>
+        </template>
+
+        <div class="graph">
+            here should be a graph
+        </div>
+        <dom-bind-notifier path="model" observed-object="{{model}}" deep></dom-bind-notifier>
+    </template>
+</template>
