@@ -5,14 +5,15 @@ using Simplified.Ring6;
 namespace Graph {
     class Program {
         static void FillTestData() {
-            if (Db.SQL("SELECT g FROM Simplified.Ring6.Graph g").First != null) {
+            long count = Db.SQL<long>("SELECT COUNT(g) FROM Simplified.Ring6.Graph g").First;
+            if (count > 1) {
                 return;
             }
-            
+
             Db.Transact(() => {
-                Simplified.Ring6.Graph gr = new Simplified.Ring6.Graph() { Name = "Graph1", Description = "Test graph 1" };
+                Simplified.Ring6.Graph gr = new Simplified.Ring6.Graph() { Name = "Graph" + (count + 1), Description = "Test graph " + (count + 1) };
                 for (int i = 0; i < 10; i++) {
-                    GraphValue v = new GraphValue() { Graph = gr, XValue = i, YValue = i * i };
+                    GraphValue v = new GraphValue() { Graph = gr, XValue = i, YValue = (decimal)Math.Pow(2, (double)i) };
                 }
             });
         }

@@ -1,8 +1,10 @@
-﻿<link rel="import" href="/sys/polymer/polymer.html">
-
+﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 <dom-module id="graph-element">
     <template>
-        <div>Here will be a <b>{{name}}</b> graph.</div>
+        <div>The <b>{{name}}</b> graph.</div>
+        <div>
+            <canvas id="canvasGraph"></canvas>
+        </div>
     </template>
     <script>
         // register a new element called proto-element
@@ -11,10 +13,54 @@
             properties: {
                 name: { type: String },
                 description: { type: String },
-                values: { type: Array }
+                values: {
+                    type: Array,
+                    observer: "valuesChanged"
+                }
+            },
+            valuesChanged: function (newValue, oldValue) {
+                this.initChart();
+            },
+            initChart: function () {
+                if (!this.attachedFired)
+                    return;
+
+                if (this.chart) {
+                    this.chart.destroy();
+                }
+
+                if (!this.values || !this.values.any()) {
+                    return;
+                }
+
+                var xlabels = this.values.select("val=>val.XValue");
+
+                var lineChartData = {
+                    labels: xlabels,
+                    datasets: [{
+                        label: this.name,
+                        fillColor: "rgba(220,220,220,0.2)",
+                        strokeColor: "rgba(220,220,220,1)",
+                        pointColor: "rgba(220,220,220,1)",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: this.values.select("val=>val.YValue")
+                    }]
+                };
+                
+                var ctx = this.$.canvasGraph.getContext("2d");
+                this.chart = new this.Chartjs(ctx).Line(lineChartData, {
+                    responsive: true
+                });
             },
             // add a callback to the element's prototype
-            ready: function () {
+            attached: function () {
+                this.attachedFired = true;
+                
+                this.Chartjs = Chart.noConflict();
+
+                this.initChart();
             }
         });
     </script>
