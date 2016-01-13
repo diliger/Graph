@@ -33,8 +33,8 @@
                     return;
                 }
 
-                var xlabels = this.values.select("val=>val.XValue");
-
+                var xlabels = this.values.select("val=>val.XLabel||val.XValue");
+                console.warn(this.values);
                 var lineChartData = {
                     labels: xlabels,
                     datasets: [{

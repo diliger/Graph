@@ -1,8 +1,6 @@
 using Starcounter;
 
-namespace Graph
-{
-    partial class MasterPage : Page
-    {
+namespace Graph {
+    partial class MasterPage : Page {
     }
 }

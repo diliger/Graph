@@ -6,21 +6,25 @@ namespace Graph {
     class Program {
         static void FillTestData() {
             long count = Db.SQL<long>("SELECT COUNT(g) FROM Simplified.Ring6.Graph g").First;
-            if (count > 1) {
+            if (count > 5) {
                 return;
             }
 
             Db.Transact(() => {
                 Simplified.Ring6.Graph gr = new Simplified.Ring6.Graph() { Name = "Graph" + (count + 1), Description = "Test graph " + (count + 1) };
-                for (int i = 0; i < 10; i++) {
-                    GraphValue v = new GraphValue() { Graph = gr, XValue = i, YValue = (decimal)Math.Pow(2, (double)i) };
+                string[] names = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;
+                for (int i = 0; i < names.Length; i++) {
+                    GraphValue v = new GraphValue() {
+                        Graph = gr,
+                        XValue = i + 1,
+                        XLabel = names[i],
+                        YValue = Math.Round(1.0M / ((i + 1) / (decimal)(names.Length / 2)), 4)
+                    };
                 }
             });
         }
 
         static void Main() {
-            FillTestData();
-
             Handle.GET("/Graph", () => {
                 MasterPage master;
 
@@ -48,19 +52,22 @@ namespace Graph {
                 return master;
             });
 
-
             //The bug! /Graph/Graphs/{?} returns Not found exception
             Handle.GET("/Graph/Details/{?}", (string Key) => {
-                MasterPage master = Self.GET<MasterPage>("/Graph");
-                master.FocusedGraph = Db.Scope<GraphPage>(() => {
-                    var page = new GraphPage() {
-                        Html = "/Graph/viewmodels/GraphPage.html",
-                        Data = Db.SQL<Simplified.Ring6.Graph>(@"SELECT i FROM Simplified.Ring6.Graph i WHERE i.Key = ?", Key).First
-                    };
+                FillTestData();
 
-                    return page;
-                });
+                MasterPage master = Self.GET<MasterPage>("/Graph");
+                master.FocusedGraph = Self.GET<GraphPage>("/Graph/Only/" + Key);
                 return master;
+            });
+
+            Handle.GET("/Graph/Only/{?}", (string Key) => {
+                GraphPage page = new GraphPage() {
+                    Html = "/Graph/viewmodels/GraphPage.html",
+                    Data = Db.SQL<Simplified.Ring6.Graph>(@"SELECT i FROM Simplified.Ring6.Graph i WHERE i.Key = ?", Key).First
+                };
+
+                return page;
             });
 
             Handle.GET("/Graph/menu", () => {
