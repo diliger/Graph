@@ -80,6 +80,8 @@ namespace Graph {
 
             UriMapping.Map("/Graph/app-name", UriMapping.MappingUriPrefix + "/app-name");
             UriMapping.Map("/Graph/menu", UriMapping.MappingUriPrefix + "/menu");
+
+            UriMapping.OntologyMap<Simplified.Ring6.Graph>("/Graph/Only/{?}");
         }
     }
 }
